@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://andrianarivo.github.io/react-todo-app",
+  "src": "",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "delpoy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
@@ -20,6 +20,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
