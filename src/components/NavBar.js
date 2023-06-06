@@ -1,10 +1,10 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '@/context/AuthContext.jsx';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
+import { useAuthContext } from 'context/AuthContext';
 
-const Navbar = () => {
+const NavBar = () => {
   const { user, logout } = useAuthContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -40,6 +40,7 @@ const Navbar = () => {
     <>
       <nav ref={ref} className="navbar">
         <button
+          type="button"
           className="toggle"
           onClick={() => setNavbarOpen((prev) => !prev)}
         >
@@ -55,32 +56,11 @@ const Navbar = () => {
           )}
         </button>
         <ul className={`menu-nav${navbarOpen ? ' show-menu' : ''}`}>
-          {links.map((link) => {
-            return (
-              <React.Fragment key={link.text}>
-                {link.path === 'login' ? (
-                  !user && (
-                    <li>
-                      <NavLink
-                        to={link.path}
-                        onClick={() => setNavbarOpen(false)}
-                      >
-                        {link.text}
-                      </NavLink>
-                    </li>
-                  )
-                ) : link.path === 'profile' ? (
-                  user && (
-                    <li>
-                      <NavLink
-                        to={link.path}
-                        onClick={() => setNavbarOpen(false)}
-                      >
-                        {link.text}
-                      </NavLink>
-                    </li>
-                  )
-                ) : (
+          {links.map((link) => (
+            <React.Fragment key={link.text}>
+              {/* eslint-disable-next-line no-nested-ternary */}
+              {link.path === 'login' ? (
+                !user && (
                   <li>
                     <NavLink
                       to={link.path}
@@ -89,10 +69,27 @@ const Navbar = () => {
                       {link.text}
                     </NavLink>
                   </li>
-                )}
-              </React.Fragment>
-            );
-          })}
+                )
+              ) : link.path === 'profile' ? (
+                user && (
+                  <li>
+                    <NavLink
+                      to={link.path}
+                      onClick={() => setNavbarOpen(false)}
+                    >
+                      {link.text}
+                    </NavLink>
+                  </li>
+                )
+              ) : (
+                <li>
+                  <NavLink to={link.path} onClick={() => setNavbarOpen(false)}>
+                    {link.text}
+                  </NavLink>
+                </li>
+              )}
+            </React.Fragment>
+          ))}
           {!user && pathname === '/' && (
             <li className="log-in">
               <span>Log in to edit to-dos</span>
@@ -103,10 +100,12 @@ const Navbar = () => {
       {user && (
         <div className="logout">
           <p>{user}</p>
-          {<button onClick={handleLogout}>Logout</button>}
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       )}
     </>
   );
 };
-export default Navbar;
+export default NavBar;

@@ -1,10 +1,13 @@
-import styles from '@/styles/TodoItem.module.css';
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { AiFillEdit } from 'react-icons/ai';
-import { useAuthContext } from '@/context/AuthContext.jsx';
+import styles from 'styles/TodoItem.module.css';
+import { useAuthContext } from 'context/AuthContext';
+import PropTypes from 'prop-types';
 
-const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
+const TodoItem = ({
+  itemProp, handleChange, delTodo, setUpdate,
+}) => {
   const [editing, setEditing] = useState(false);
   const { user } = useAuthContext();
 
@@ -15,8 +18,8 @@ const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
     textDecoration: 'line-through',
   };
 
-  let viewMode = {};
-  let editMode = {};
+  const viewMode = {};
+  const editMode = {};
   if (editing) {
     viewMode.display = 'none';
   } else {
@@ -44,11 +47,11 @@ const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
           {itemProp.title}
         </span>
         {user && (
-          <button onClick={handleEditing}>
+          <button type="button" onClick={handleEditing}>
             <AiFillEdit style={{ color: '#5e5e5e', fontSize: '16px' }} />
           </button>
         )}
-        <button onClick={() => delTodo(itemProp.id)}>
+        <button type="button" onClick={() => delTodo(itemProp.id)}>
           <FaTrash />
         </button>
       </div>
@@ -63,4 +66,12 @@ const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
     </li>
   );
 };
+
+TodoItem.propTypes = {
+  itemProp: PropTypes.objectOf.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  delTodo: PropTypes.func.isRequired,
+  setUpdate: PropTypes.func.isRequired,
+};
+
 export default TodoItem;

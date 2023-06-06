@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import styles from '@/styles/Login.module.css';
-import { useAuthContext } from '@/context/AuthContext.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styles from 'styles/Login.module.css';
+import { useAuthContext } from 'context/AuthContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ const Login = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <button>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
